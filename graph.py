@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-
 from global_info import *
 
 
@@ -26,14 +25,15 @@ def draw_messages_by_day(global_dict: dict, type: str = "bar"):
         plt.ylabel("Nombre de messages")
     elif type == "pie":
         plt.pie(y, labels=x, autopct="%1.1f%%",
-                colors=["#3ED8C9", "#3E9CD8", "#3E3ED8", "#9C3ED8", "#D83ED8", "#D83E9C", "#D83E3E", "#D89C3E",
-                        "#D8D83E", "#9CD83E", "#3ED83E", "#3ED89C"])
+                colors=["#3ED8C9", "#3E9CD8", "#3E3ED8", "#9C3ED8", "#D83ED8", "#D83E9C", "#D83E3E"])
 
 
     # Draw graph
     plt.legend(["Moyenne", "Nombre de messages"])
     plt.title("Nombre de messages par jour")
-    plt.show()
+    # Save image
+    plt.savefig("images/messages_by_day.png")
+    plt.close()
 
 def draw_messages_by_month(global_dict: dict):
     """Draw graph of number of messages by month"""
@@ -41,9 +41,8 @@ def draw_messages_by_month(global_dict: dict):
     activity_per_month = global_dict["user"]["activity_per_month_year"]
 
     # Get x and y values
-    x = range(1, 13)
+    x = list(range(12))
     data = list(activity_per_month.values())
-    print(data)
 
     # Initialize y
     y = {}
@@ -51,18 +50,17 @@ def draw_messages_by_month(global_dict: dict):
     for month in range(1, 13):
         y[str(month)] = 0
     # Add values
-    for year, data_year in zip(x, data):
+    for data_year in data:
         for month, data_month in data_year.items():
             y[month] += data_month["nb_messages"]
     # Convert to list
     y = list(y.values())
-    print(y)
 
     # Tracé
     plt.bar(x, y, color="#3ED8C9")
     plt.plot(x, [sum(y) / len(y) for _ in range(len(x))], color="#D83E3E")
 
-    plt.xticks(range(len(x)),
+    plt.xticks(x,
                ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août",
                 "Septembre", "Octobre", "Novembre", "Décembre"])
     # Add values above each bar
@@ -74,7 +72,10 @@ def draw_messages_by_month(global_dict: dict):
     # Draw graph
     plt.legend([f"Moyenne mensuelle({int(sum(y) / len(y))})", "Nombre de messages"])
     plt.title("Nombre de messages par mois")
-    plt.show()
+
+    # Save figure
+    plt.savefig("images/messages_par_mois.png")
+    plt.close()
 
 def draw_messages_by_year(global_dict: dict):
     """Draw graph of number of messages by year"""
@@ -88,17 +89,14 @@ def draw_messages_by_year(global_dict: dict):
     y = {}
 
     for year, data_year in zip(x, data):
-        print(data_year)
         y[year] = {
             'nb_messages': sum(month['nb_messages'] for month in data_year.values()),
             'nb_messages_sent': sum(month['nb_messages_sent'] for month in data_year.values()),
             'nb_messages_received': sum(month['nb_messages_received'] for month in data_year.values())
         }
 
-
     y1 = [y[year]['nb_messages_sent'] for year in y.keys()]
     y2 = [y[year]['nb_messages_received'] for year in y.keys()]
-
 
     # Tracé
     plt.bar(x, y1, color="#3ED8C9")
@@ -117,7 +115,9 @@ def draw_messages_by_year(global_dict: dict):
     plt.xlabel("Year")
     plt.ylabel("Number of messages")
     plt.title("Number of messages by year")
-    plt.show()
+    # Save image
+    plt.savefig("images/messages_by_year.png")
+    plt.close()
 
 def draw_most_active_conversation(global_dict: dict, nb: int = 10, single: bool = False, group: bool = False):
     """Draw graph of most active conversation"""
@@ -153,6 +153,6 @@ def draw_most_active_conversation(global_dict: dict, nb: int = 10, single: bool 
     plt.ylabel('Number of Messages')
     plt.title('Most Active Conversations by Number of Messages')
 
-    # Display plot
-    plt.show()
+    plt.savefig('images/most_active_conversation.png')
+    plt.close()
 
