@@ -3,7 +3,7 @@ import os
 from conversation_info import *
 
 
-def get_full_name():
+def get_full_name() -> str:
     """Get full name of Messenger user"""
     # Read autofill_information.json file
     if os.path.exists("messages/autofill_information.json"):
@@ -14,10 +14,10 @@ def get_full_name():
             full_name = autofill_information["autofill_information_v2"]["FULL_NAME"][0]
             return full_name
     else:
-        print("File autofill_information.json does not exist.")
-        return None
+        raise FileNotFoundError("File autofill_information.json not found")
 
-def get_nb_conversations(directory):
+
+def get_nb_conversations(directory: str) -> int:
     """Get number of conversations"""
     # Go into inbox folder
     directory = directory + "/inbox"
@@ -27,7 +27,8 @@ def get_nb_conversations(directory):
     nb_conversations = len(inbox_folder)
     return nb_conversations
 
-def get_nb_total_messages_sent(directory: str, year = None, month = None):
+
+def get_nb_total_messages_sent(directory: str, year: int = None, month: int = None):
     """Get number of messages sent by user"""
     # Get full name of Messenger user
     user = get_full_name()
@@ -42,7 +43,8 @@ def get_nb_total_messages_sent(directory: str, year = None, month = None):
         nb_messages += get_nb_messages_sent_by_user(path, user, year, month)
     return nb_messages
 
-def get_nb_total_messages_received(directory: str, year = None, month = None):
+
+def get_nb_total_messages_received(directory: str, year=None, month=None):
     """Get number of messages received by user"""
     # Get full name of Messenger user
     user = get_full_name()
@@ -57,7 +59,8 @@ def get_nb_total_messages_received(directory: str, year = None, month = None):
         nb_messages += get_nb_messages_received_by_user(path, user, year, month)
     return nb_messages
 
-def get_nb_total_messages(directory: str, year = None, month = None):
+
+def get_nb_total_messages(directory: str, year: int = None, month: int = None) -> int:
     """Get number of total messages sent and received by user"""
     # Get number of messages sent
     nb_messages_sent = get_nb_total_messages_sent(directory, year, month)
@@ -67,7 +70,8 @@ def get_nb_total_messages(directory: str, year = None, month = None):
     nb_messages = nb_messages_sent + nb_messages_received
     return nb_messages
 
-def nb_total_messages_by_month_year(directory: str):
+
+def nb_total_messages_by_month_year(directory: str) -> dict:
     """Get number of total messages sent and received by user by year"""
     dict = {}
     for year in range(2010, 2024):
@@ -78,10 +82,12 @@ def nb_total_messages_by_month_year(directory: str):
             if nb_messages != 0 and str(year) not in dict:
                 dict[str(year)] = {}
             if nb_messages != 0:
-                dict[str(year)][str(month)] = {"nb_messages": nb_messages, "nb_messages_sent": nb_messages_sent, "nb_messages_received": nb_messages_received}
+                dict[str(year)][str(month)] = {"nb_messages": nb_messages, "nb_messages_sent": nb_messages_sent,
+                                               "nb_messages_received": nb_messages_received}
     return dict
 
-def get_nb_avg_messages_sent(directory: str):
+
+def get_nb_avg_messages_sent(directory: str) -> float:
     """Get average number of messages sent by user"""
     # Get number of conversations
     nb_conversations = get_nb_conversations(directory)
@@ -91,7 +97,8 @@ def get_nb_avg_messages_sent(directory: str):
     avg_messages_sent = nb_messages_sent / nb_conversations
     return avg_messages_sent
 
-def get_nb_avg_messages_received(directory: str):
+
+def get_nb_avg_messages_received(directory: str) -> float:
     """Get average number of messages received by user"""
     # Get number of conversations
     nb_conversations = get_nb_conversations(directory)
@@ -101,7 +108,8 @@ def get_nb_avg_messages_received(directory: str):
     avg_messages_received = nb_messages_received / nb_conversations
     return avg_messages_received
 
-def get_nb_avg_messages(directory: str):
+
+def get_nb_avg_messages(directory: str) -> float:
     """Get average number of messages per conversation"""
     # Get number of conversations
     nb_conversations = get_nb_conversations(directory)
@@ -111,7 +119,8 @@ def get_nb_avg_messages(directory: str):
     avg_messages = nb_messages / nb_conversations
     return avg_messages
 
-def add_activity_per_day(activity_per_day: dict, activity_per_day_conversation: dict):
+
+def add_activity_per_day(activity_per_day: dict, activity_per_day_conversation: dict) -> dict:
     """Add activity per day of conversation to activity per day"""
     for day in activity_per_day_conversation.keys():
         if day in activity_per_day:
@@ -120,7 +129,8 @@ def add_activity_per_day(activity_per_day: dict, activity_per_day_conversation: 
             activity_per_day[day] = activity_per_day_conversation[day]
     return activity_per_day
 
-def get_activity_per_day(directory: str):
+
+def get_activity_per_day(directory: str) -> dict:
     """Get activity per day"""
     user = get_full_name()
     # Go into inbox folder
@@ -138,7 +148,8 @@ def get_activity_per_day(directory: str):
         activity_per_day = add_activity_per_day(activity_per_day, activity_per_day_conversation)
     return activity_per_day
 
-def get_first_message_date(directory: str):
+
+def get_first_message_date(directory: str) -> datetime:
     # Go into inbox folder
     directory = directory + "/inbox"
     # Read inbox folder
@@ -155,18 +166,21 @@ def get_first_message_date(directory: str):
             first_date = date
     return first_date
 
-def count_number_days_between_date(start_date: datetime, end_date: datetime):
+
+def count_number_days_between_date(start_date: datetime, end_date: datetime) -> int:
     """Count number of days between two dates"""
     # Count number of days between two dates
     delta = end_date - start_date
     return delta.days
 
-def store_dict_in_json(dict: dict, path: str):
+
+def store_dict_in_json(dict: dict, path: str) -> None:
     """Store dictionary in json file"""
     with open(path, 'w') as fp:
         json.dump(dict, fp)
 
-def create_dict_global(directory):
+
+def create_dict_global(directory: str) -> dict:
     """Create dictionary of global stats"""
     # Create dictionary of global stats
     stats = {}
@@ -179,7 +193,8 @@ def create_dict_global(directory):
     user_stats["nb_avg_messages_sent_per_conversation"] = get_nb_avg_messages_sent(directory)
     user_stats["nb_avg_messages_received_per_conversation"] = get_nb_avg_messages_received(directory)
     user_stats["nb_avg_messages_per_conversation"] = get_nb_avg_messages(directory)
-    user_stats["nb_avg_messages_per_day"] = user_stats["nb_total_messages"] / count_number_days_between_date(user_stats["first_message"], datetime.now())
+    user_stats["nb_avg_messages_per_day"] = user_stats["nb_total_messages"] / count_number_days_between_date(
+        user_stats["first_message"], datetime.now())
     user_stats["activity_per_day"] = get_activity_per_day(directory)
     user_stats["activity_per_month_year"] = nb_total_messages_by_month_year(directory)
     user_stats["first_message"] = user_stats["first_message"].strftime("%d/%m/%Y")
@@ -199,13 +214,15 @@ def create_dict_global(directory):
     stats["conversations"] = conversations_stats
     return stats
 
-def get_most_active_conversation(dictionary: dict):
+
+def get_most_active_conversation(dictionary: dict) -> list:
     """Get the top (num = 10 by default) most active single conversations"""
     # Sort dictionary by number of messages
     sorted_dict = sorted(dictionary["conversations"], key=lambda x: x[1]["nb_messages"], reverse=True)
     return sorted_dict
 
-def get_most_active_single_conversation(dictionary: dict, num = 10):
+
+def get_most_active_single_conversation(dictionary: dict, num: int = 10) -> list:
     """Get the top (num = 10 by default) most active single conversations"""
     # Sort dictionary by number of messages
     sorted_dict = sorted(dictionary["conversations"].items(), key=lambda x: x[1]['nb_messages'], reverse=True)
@@ -217,7 +234,8 @@ def get_most_active_single_conversation(dictionary: dict, num = 10):
     else:
         return filtered_single_conv[:num]
 
-def get_most_active_group_conversation(dictionary: dict, num = 10):
+
+def get_most_active_group_conversation(dictionary: dict, num: int = 10) -> list:
     """Get the top (num = 10 by default) most active group conversations"""
     # Sort dictionary by number of messages
     sorted_dict = sorted(dictionary["conversations"].items(), key=lambda x: x[1]['nb_messages'], reverse=True)
