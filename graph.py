@@ -137,7 +137,7 @@ def draw_most_active_conversation(global_dict: dict, nb: int = 10, single: bool 
     # Get x and y values
     x = range(1, len(most_active_conversation) + 1)
     y = [conversation[1]["nb_messages"] for conversation in most_active_conversation]
-    top_write_plot = [conversation[0] for conversation in most_active_conversation]
+    top_write_plot = [conversation[0].encode('iso-8859-1').decode('utf-8') for conversation in most_active_conversation]
 
     # Tracé
     plt.bar(x, y, color="#3ED8C9")
