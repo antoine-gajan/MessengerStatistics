@@ -171,8 +171,8 @@ class MessengerStatistics(tkinter.Tk):
         label_subtitle_stats.pack(padx=20, pady=20, side=TOP, anchor="w")
         label_nb_avg_messages_per_conversation = tkinter.Label(self,
                                                                text="Nombre moyen de messages par conversation: " + str(
-                                                                   self.dict_messages["user"][
-                                                                       "nb_avg_messages_per_conversation"]))
+                                                                   "{:.2f}".format(self.dict_messages["user"][
+                                                                       "nb_avg_messages_per_conversation"])))
         self.labels.append(label_nb_avg_messages_per_conversation)
         label_nb_avg_messages_per_conversation.pack(pady=10, side=TOP, anchor="w")
         label_nb_avg_messages_sent_per_conversation = tkinter.Label(self,
@@ -184,12 +184,14 @@ class MessengerStatistics(tkinter.Tk):
         label_nb_avg_messages_sent_per_conversation.pack(pady=10, side=TOP, anchor="w")
         label_nb_avg_messages_received_per_conversation = tkinter.Label(self,
                                                                         text="Nombre moyen de messages reçus par conversation: " + str(
+                                                                            "{:.2f}".format(
                                                                             self.dict_messages["user"][
-                                                                                "nb_avg_messages_received_per_conversation"]))
+                                                                                "nb_avg_messages_received_per_conversation"])))
         self.labels.append(label_nb_avg_messages_received_per_conversation)
         label_nb_avg_messages_received_per_conversation.pack(pady=10, side=TOP, anchor="w")
         label_nb_avg_messages_per_day = tkinter.Label(self, text="Nombre moyen de messages par jour: " + str(
-            self.dict_messages["user"]["nb_avg_messages_per_day"]))
+            "{:.2f}".format(
+            self.dict_messages["user"]["nb_avg_messages_per_day"])))
         self.labels.append(label_nb_avg_messages_per_day)
         label_nb_avg_messages_per_day.pack(pady=10, side=TOP, anchor="w")
 
