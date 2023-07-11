@@ -23,7 +23,8 @@ You will be able to obtain graphs about:
 
 ## 💡Examples of the application in operation:
 
-<img width="745" alt="image" src="https://github.com/antoine-gajan/MessengerStatistics/assets/86797909/093335ee-2c03-4ffd-98e5-9a89d8d785d3">
-<img width="746" alt="image" src="https://github.com/antoine-gajan/MessengerStatistics/assets/86797909/2c6a4ac9-3adc-4b0c-9471-3c64590c6449">
-<img width="749" alt="image" src="https://github.com/antoine-gajan/MessengerStatistics/assets/86797909/f71ea95b-8250-4b1d-9f4a-90544c865c61">
+<img width="743" alt="image" src="https://github.com/antoine-gajan/MessengerStatistics/assets/86797909/61deef5b-6eb8-4ef5-bb7e-ad74c965ebd0">
+<img width="743" alt="image" src="https://github.com/antoine-gajan/MessengerStatistics/assets/86797909/cf58b672-f461-4025-88e5-093a74a09271">
+<img width="743" alt="image" src="https://github.com/antoine-gajan/MessengerStatistics/assets/86797909/d018bb22-7f3e-403b-94f0-ef99e4de2b70">
+
 
